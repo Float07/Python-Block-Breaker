@@ -77,11 +77,11 @@ class Ball:
 
     # Check and handle colision with level boundaries
     collisionBox = self.getCollisionBox()
-    if collisionBox['h'][0] < 0 or collisionBox['h'][1] > 264:
+    if collisionBox['h'][0] < 0 or collisionBox['h'][1] > 512:
       self.xSpeed = -self.xSpeed
       newX = self.x + (2 * self.xSpeed)
     
-    if collisionBox['v'][0] < 0 or collisionBox['v'][1] > 264:
+    if collisionBox['v'][0] < 0 or collisionBox['v'][1] > 512:
       self.ySpeed = -self.ySpeed
       newY = self.y + (2 * self.ySpeed)
 

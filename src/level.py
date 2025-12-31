@@ -17,5 +17,14 @@ class Level:
     self.ball.collideWithBox(paddle.x, paddle.y, paddle.width, paddle.height)
 
   def draw(self):
+    self.drawBlocks()
     self.paddle.draw()
     self.ball.draw()
+
+  def drawBlocks(self):
+    blockWidth = 32
+    blockHeight = 16
+    for x in range(15):
+      for y in range(10):
+        pyxel.blt(x * blockWidth, y * blockHeight, 0, 0, 24, blockWidth, blockHeight)
+  
