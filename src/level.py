@@ -24,7 +24,7 @@ class Level:
   def drawBlocks(self):
     blockWidth = 32
     blockHeight = 16
-    for x in range(15):
+    for x in range(16):
       for y in range(10):
         pyxel.blt(x * blockWidth, y * blockHeight, 0, 0, 24, blockWidth, blockHeight)
   
