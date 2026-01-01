@@ -29,7 +29,10 @@ class Level:
     for idx, bl in enumerate(self.blocks):
       Block = block.Block
       hasCollided = ball.collideWithBox(bl.x, bl.y, Block.blockWidth, Block.blockHeight)
-      if (hasCollided): self.blocks.pop(idx)
+      if (hasCollided):
+        self.blocks.pop(idx)
+        # Break to prevent multiple collisions per tick
+        break
   
   def update(self):
     self.ball.update()
