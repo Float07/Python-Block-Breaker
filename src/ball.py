@@ -70,6 +70,8 @@ class Ball:
       self.xSpeed = -self.xSpeed
     else:
       self.ySpeed = -self.ySpeed
+    
+    return True
 
   def update(self):
     newX = self.x + self.xSpeed
