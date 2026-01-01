@@ -5,8 +5,8 @@ import block
 
 class Level:
   def __init__(self):
-    self.paddle = paddle.Paddle(130, 230)
-    self.ball = ball.Ball(130, 60)
+    self.paddle = paddle.Paddle(256, 500)
+    self.ball = ball.Ball(256, 400)
     self.ball.setSpeed(3, 3)
 
     self.blocks = []
@@ -17,11 +17,22 @@ class Level:
   
   def movePaddle(self, deltaX):
     self.paddle.move(deltaX)
+
+  def collideBall(self):
+    ball = self.ball
+
+    # Collide with paddle
+    paddle = self.paddle
+    ball.collideWithBox(paddle.x, paddle.y, paddle.width, paddle.height)
+    
+    # Collide with blocks
+    for bl in self.blocks:
+      Block = block.Block
+      ball.collideWithBox(bl.x, bl.y, Block.blockWidth, Block.blockHeight)
   
   def update(self):
     self.ball.update()
-    paddle = self.paddle
-    self.ball.collideWithBox(paddle.x, paddle.y, paddle.width, paddle.height)
+    self.collideBall()
 
   def draw(self):
     self.paddle.draw()
