@@ -26,9 +26,10 @@ class Level:
     ball.collideWithBox(paddle.x, paddle.y, paddle.width, paddle.height)
     
     # Collide with blocks
-    for bl in self.blocks:
+    for idx, bl in enumerate(self.blocks):
       Block = block.Block
-      ball.collideWithBox(bl.x, bl.y, Block.blockWidth, Block.blockHeight)
+      hasCollided = ball.collideWithBox(bl.x, bl.y, Block.blockWidth, Block.blockHeight)
+      if (hasCollided): self.blocks.pop(idx)
   
   def update(self):
     self.ball.update()
