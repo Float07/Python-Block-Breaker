@@ -35,7 +35,7 @@ class Level:
       Block = block.Block
       hasCollided = ball.collideWithBox(bl.x, bl.y, Block.blockWidth, Block.blockHeight)
       if (hasCollided):
-        self.blocks.pop(idx)
+        bl.takeDamage()
         # Break to prevent multiple collisions per tick
         break
   
