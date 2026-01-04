@@ -29,7 +29,7 @@ class Level:
     # Collide with blocks
     for idx, bl in enumerate(self.blocks):
       # Do not collide with destroyed blocks
-      if (bl.health <= 0): return
+      if (bl.health <= 0): continue
 
       # If it's not destroyed, try to collide
       Block = block.Block
