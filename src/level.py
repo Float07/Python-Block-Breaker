@@ -28,6 +28,10 @@ class Level:
     
     # Collide with blocks
     for idx, bl in enumerate(self.blocks):
+      # Do not collide with destroyed blocks
+      if (bl.health <= 0): return
+
+      # If it's not destroyed, try to collide
       Block = block.Block
       hasCollided = ball.collideWithBox(bl.x, bl.y, Block.blockWidth, Block.blockHeight)
       if (hasCollided):

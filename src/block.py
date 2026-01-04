@@ -17,6 +17,9 @@ class Block:
     self.health -= 1
   
   def draw(self):
+    # If destroyed, do not draw
+    if self.health <= 0: return
+
     blockWidth = Block.blockWidth
     blockHeight = Block.blockHeight
 
