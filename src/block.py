@@ -23,5 +23,11 @@ class Block:
     blockWidth = Block.blockWidth
     blockHeight = Block.blockHeight
 
-    pyxel.blt(self.relX * blockWidth, self.relY * blockHeight, 0, 0, 24, blockWidth, blockHeight)
+    # Calculate vertical and horizontal offsets for loading sprites
+    # - Horizontal offset - depends on damage taken, and defines the cracks of the block to indicate damage
+    # - Vertical offset - depends on the block level, and defines the color of the block
+    hOffset = (self.health - self.blockLvl) * -1 * blockWidth
+    vOffset = 24 + ((self.blockLvl - 1) * blockHeight)
+
+    pyxel.blt(self.relX * blockWidth, self.relY * blockHeight, 0, hOffset, vOffset, blockWidth, blockHeight)
 
