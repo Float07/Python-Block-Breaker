@@ -13,6 +13,8 @@ class Ball:
   def __init__(self, startingX, startingY):
     self.x = startingX
     self.y = startingY
+    self.xSpeed = 0
+    self.ySpeed = 0
     self.width = 8
     self.height = 8
   
