@@ -1,9 +1,10 @@
 import pyxel
 import level
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
 class App:
   def __init__(self):
-    pyxel.init(512, 512, title='pyng', fps=60)
+    pyxel.init(SCREEN_WIDTH, SCREEN_HEIGHT, title='pyng', fps=60)
     pyxel.load('assets/assets.pyxres')
     self.level = level.Level()
     pyxel.run(self.update, self.draw)
