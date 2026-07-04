@@ -45,7 +45,7 @@ class Ball:
     self.ySpeed = unitYSpeed * totalSpeed
   
   # Process collision with a given box. If collision happens, update position and speed of ball.
-  # Return True if collision happens and False otherwise
+  # Return which speed axis was flipped ('x' or 'y') if collision happens, None otherwise
   # TODO: Prevent ball from phasing through if too fast
   def collideWithBox(self, x, y, width, height):
     boxCollision = getCollisionBox(x, y, width, height)
@@ -63,7 +63,7 @@ class Ball:
       or
       (boxCollision['v'][0] <= selfCollision['v'][1] <= boxCollision['v'][1])
     )
-    if not isIntercedingHorizontally or not isIntercedingVertically: return False
+    if not isIntercedingHorizontally or not isIntercedingVertically: return None
 
     # If current collision boxes interecede, there is collision. Let's handle it!
     # First, we need to find out from which direction the collision happened
@@ -72,27 +72,28 @@ class Ball:
       or
       (boxCollision['h'][0] <= prevSelfCollision['h'][1] <= boxCollision['h'][1])
     )
-    collDirection = 'h' if wasIntercedingHorizontally else 'v'
 
     # Now we need to reposition the ball to ouside the box it collided with
-    
 
-    # Now we need to change its speed
-    if collDirection != 'h':
-      self.xSpeed = -self.xSpeed
-    else:
+    # If the ball's box already overlapped horizontally last frame, this collision came from
+    # vertical movement (hit from above/below). Otherwise, it came from the side.
+    if wasIntercedingHorizontally:
       self.ySpeed = -self.ySpeed
-    
-    return True
+      return 'y'
+    else:
+      self.xSpeed = -self.xSpeed
+      return 'x'
 
   # Collide with paddle
-  # Call collideWithBox and, if true, calculate new direction based on where
-  # on the paddle the ball hit (center = straight up, edges = sharper angle)
+  # Call collideWithBox and, if the hit was on top of the paddle, calculate new
+  # direction based on where on the paddle the ball hit (center = straight up,
+  # edges = sharper angle). A hit on the side of the paddle just bounces normally.
   def collideWithPaddle(self, x, y, width, height):
-    hasCollided = self.collideWithBox(x, y, width, height)
+    collisionAxis = self.collideWithBox(x, y, width, height)
 
-    # No collision with paddle, which means we're done
-    if (not hasCollided): return
+    # No collision, or hit the side of the paddle: collideWithBox already
+    # bounced it correctly, nothing more to do
+    if collisionAxis != 'y': return
 
     speed = math.sqrt((self.xSpeed ** 2) + (self.ySpeed ** 2))
 
