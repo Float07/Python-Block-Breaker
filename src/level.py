@@ -32,14 +32,14 @@ class Level:
       currentBall.collideWithPaddle(self.paddle.x, self.paddle.y, self.paddle.width, self.paddle.height)
 
       # Collide with blocks
-      for bl in self.blocks:
+      for currentBlock in self.blocks:
         # Do not collide with destroyed blocks
-        if (bl.health <= 0): continue
+        if (currentBlock.health <= 0): continue
 
         # If it's not destroyed, try to collide
-        hasCollided = currentBall.collideWithBox(bl.x, bl.y, block.Block.blockWidth, block.Block.blockHeight)
+        hasCollided = currentBall.collideWithBox(currentBlock.x, currentBlock.y, block.Block.blockWidth, block.Block.blockHeight)
         if (hasCollided):
-          bl.takeDamage()
+          currentBlock.takeDamage()
           # Break to prevent multiple collisions per tick
           break
 
