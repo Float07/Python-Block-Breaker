@@ -2,6 +2,10 @@
 
 Made with Pyxel
 
+## Prerequisites
+
+- Python 3.8+
+
 ## Setup
 
 Create a virtual environment and install the dependencies (just Pyxel) into it:
