@@ -6,45 +6,52 @@ import block
 class Level:
   def __init__(self):
     self.paddle = paddle.Paddle(256, 500)
-    self.ball = ball.Ball(256, 400)
-    self.ball.setSpeed(3, 3)
+    self.balls = [self.createBall()]
 
     self.blocks = []
 
     for x in range(16):
       for y in range(10):
         self.blocks.append(block.Block(x, y))
-  
+
+  def createBall(self):
+    newBall = ball.Ball(256, 400)
+    newBall.setSpeed(3, 3)
+    return newBall
+
+  # Add another ball to the level. Balls do not collide with each other.
+  def addBall(self):
+    self.balls.append(self.createBall())
+
   def movePaddle(self, deltaX):
     self.paddle.move(deltaX)
 
-  def collideBall(self):
-    ball = self.ball
+  def collideBalls(self):
+    for currentBall in self.balls:
+      # Collide with paddle
+      currentBall.collideWithPaddle(self.paddle.x, self.paddle.y, self.paddle.width, self.paddle.height)
 
-    # Collide with paddle
-    paddle = self.paddle
-    ball.collideWithPaddle(paddle.x, paddle.y, paddle.width, paddle.height)
-    
-    # Collide with blocks
-    for idx, bl in enumerate(self.blocks):
-      # Do not collide with destroyed blocks
-      if (bl.health <= 0): continue
+      # Collide with blocks
+      for bl in self.blocks:
+        # Do not collide with destroyed blocks
+        if (bl.health <= 0): continue
 
-      # If it's not destroyed, try to collide
-      Block = block.Block
-      hasCollided = ball.collideWithBox(bl.x, bl.y, Block.blockWidth, Block.blockHeight)
-      if (hasCollided):
-        bl.takeDamage()
-        # Break to prevent multiple collisions per tick
-        break
-  
+        # If it's not destroyed, try to collide
+        hasCollided = currentBall.collideWithBox(bl.x, bl.y, block.Block.blockWidth, block.Block.blockHeight)
+        if (hasCollided):
+          bl.takeDamage()
+          # Break to prevent multiple collisions per tick
+          break
+
   def update(self):
-    self.ball.update()
-    self.collideBall()
+    for currentBall in self.balls:
+      currentBall.update()
+    self.collideBalls()
 
   def draw(self):
     self.paddle.draw()
-    for block in self.blocks:
-      block.draw()
-    self.ball.draw()
+    for bl in self.blocks:
+      bl.draw()
+    for currentBall in self.balls:
+      currentBall.draw()
   
