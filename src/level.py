@@ -50,8 +50,8 @@ class Level:
 
   def draw(self):
     self.paddle.draw()
-    for bl in self.blocks:
-      bl.draw()
+    for currentBlock in self.blocks:
+      currentBlock.draw()
     for currentBall in self.balls:
       currentBall.draw()
   
