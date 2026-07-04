@@ -22,9 +22,8 @@ class Level:
     ball = self.ball
 
     # Collide with paddle
-    # TODO: Change angle depending on where in the paddle the ball hits
     paddle = self.paddle
-    ball.collideWithBox(paddle.x, paddle.y, paddle.width, paddle.height)
+    ball.collideWithPaddle(paddle.x, paddle.y, paddle.width, paddle.height)
     
     # Collide with blocks
     for idx, bl in enumerate(self.blocks):

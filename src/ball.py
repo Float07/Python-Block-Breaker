@@ -75,6 +75,24 @@ class Ball:
     
     return True
 
+  # Collide with paddle
+  # Call collideWithBox and, if true, calculate new direction based on where
+  # on the paddle the ball hit (center = straight up, edges = sharper angle)
+  def collideWithPaddle(self, x, y, width, height):
+    hasCollided = self.collideWithBox(x, y, width, height)
+
+    # No collision with paddle, which means we're done
+    if (not hasCollided): return
+
+    speed = math.sqrt((self.xSpeed ** 2) + (self.ySpeed ** 2))
+
+    ballCenterX = self.x + (self.width / 2)
+    paddleCenterX = x + (width / 2)
+    collisionXProportion = (ballCenterX - paddleCenterX) / (width / 2)
+    collisionXProportion = max(-1, min(1, collisionXProportion))
+
+    self.setNormalizedSpeed(collisionXProportion, -1, speed)
+
   def update(self):
     newX = self.x + self.xSpeed
     newY = self.y + self.ySpeed
