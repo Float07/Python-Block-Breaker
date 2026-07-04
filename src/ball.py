@@ -12,12 +12,21 @@ def getCollisionBox(x, y, width, height):
 
 class Ball:
   def __init__(self, startingX, startingY):
+    self.startingX = startingX
+    self.startingY = startingY
     self.x = startingX
     self.y = startingY
     self.xSpeed = 0
     self.ySpeed = 0
     self.width = 8
     self.height = 8
+
+  # Send the ball back to its starting position
+  def reset(self):
+    self.x = self.startingX
+    self.y = self.startingY
+    self.prevX = self.startingX
+    self.prevY = self.startingY
   
   def getCollisionBox(self):
     return getCollisionBox(self.x, self.y, self.width, self.height)
@@ -104,7 +113,12 @@ class Ball:
       self.xSpeed = -self.xSpeed
       newX = self.x + (2 * self.xSpeed)
 
-    if collisionBox['v'][0] < 0 or collisionBox['v'][1] > SCREEN_HEIGHT:
+    if collisionBox['v'][1] > SCREEN_HEIGHT:
+      # Ball touched the ground: send it back to its starting position
+      self.reset()
+      return
+
+    if collisionBox['v'][0] < 0:
       self.ySpeed = -self.ySpeed
       newY = self.y + (2 * self.ySpeed)
 
