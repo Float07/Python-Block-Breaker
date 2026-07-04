@@ -1,14 +1,7 @@
 import pyxel
 import math
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
-
-def getCollisionBox(x, y, width, height):
-  intX = pyxel.floor(x)
-  intY = pyxel.floor(y)
-  return {
-    'h': [intX, intX + width], # Horizontal boundaries
-    'v': [intY, intY + height], # Vertical boundaries
-  }
+from collision import getCollisionBox
 
 class Ball:
   def __init__(self, startingX, startingY):

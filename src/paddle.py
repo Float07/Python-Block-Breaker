@@ -1,5 +1,6 @@
 import pyxel
 from constants import SCREEN_WIDTH
+from collision import getCollisionBox
 
 class Paddle:
   def __init__(self, startingX, startingY):
@@ -7,6 +8,9 @@ class Paddle:
     self.y = startingY
     self.width = 56
     self.height = 8
+
+  def getCollisionBox(self):
+    return getCollisionBox(self.x, self.y, self.width, self.height)
 
   def draw(self):
     pyxel.blt(self.x, self.y, 0, 0, 0, self.width, self.height)
